@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 #btn {
     background-color: #007bff; /* Blue button */
     color: white;
@@ -21,4 +22,29 @@
   #btn:focus {
     outline: none; /* Remove default outline */
     box-shadow: 0 0 0 3px rgba(38, 143, 255, 0.5); /* Add a custom focus ring */
+=======
+#btn {
+    background-color: #007bff; /* Blue button */
+    color: white;
+    padding: 12px 20px;
+    width: 100%;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold; /* Bold text */
+    text-transform: uppercase; /* Uppercase text */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    transition: background-color 0.3s, transform 0.2s; /* Smooth transition for background and scale effect */
+  }
+
+  #btn:hover {
+    background-color: #0056b3; /* Darker blue for hover effect */
+    transform: scale(1.05); /* Slightly scale up on hover */
+  }
+  
+  #btn:focus {
+    outline: none; /* Remove default outline */
+    box-shadow: 0 0 0 3px rgba(38, 143, 255, 0.5); /* Add a custom focus ring */
+>>>>>>> 980f8a2650164a2166e2b3a3eba3e9fc0fd69b65
   }
