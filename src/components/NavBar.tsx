@@ -17,9 +17,22 @@ function NavBar() {
             <li className="nav-item">
               <Link className="nav-link active" to="Builder">Builder</Link>
             </li>
-            <li className="nav-item">
-              <Link className="nav-link active" to="PreBuilt">Pre Built</Link>
-            </li>
+            <li className="nav-item dropdown">
+              <Link
+                className="nav-link dropdown-toggle"
+               	to="prebuilt"
+                id="navbarDropdown"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                Prebuilt
+              </Link>
+              <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
+                <li><Link className="dropdown-item" to="/">Desktops</Link></li>
+                <li><Link className="dropdown-item" to="/">Laptops</Link></li>
+              </ul>
+	          </li>
             <li className="nav-item">
               <Link className="nav-link active" to="Parts">Parts</Link>
             </li>
@@ -28,17 +41,6 @@ function NavBar() {
             </li>
             <li className="nav-item">
               <Link className="nav-link active" to="Contact">Contact</Link>
-            </li>
-            <li className="nav-item dropdown">
-              <Link className="nav-link dropdown-toggle" to="" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Dropdown
-              </Link>
-              <ul className="dropdown-menu">
-                <li><a className="dropdown-item" href="#">Action</a></li>
-                <li><a className="dropdown-item" href="#">Another action</a></li>
-                <li><hr className="dropdown-divider" /></li>
-                <li><a className="dropdown-item" href="#">Something else here</a></li>
-              </ul>
             </li>
           </ul>
           <form>
