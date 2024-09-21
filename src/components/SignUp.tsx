@@ -8,27 +8,27 @@ function SignUp() {
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault(); // Prevents the default form submission behavior
-
+    
         const form = event.currentTarget; // Gets the form element
         const username = form.Username.value;
         const email = form.Email.value;
         const password = form.Password.value;
-
+    
         // Simple client-side validation
         if (!username || !email || !password) {
             alert('Please fill in all fields.');
             return;
         }
-
+    
         // Additional validation checks (e.g., password rules)
         const passwordRegex = /^(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
         if (!passwordRegex.test(password)) {
             alert('Password must have at least 8 characters, including one number and one special character.');
             return;
         }
-
+    
         const userData = { username, email, password };
-
+    
         try {
             const response = await fetch('http://localhost:5500/signup', {
                 method: 'POST',
@@ -42,25 +42,19 @@ function SignUp() {
     
             if (response.ok) {
                 alert(result.message); // Show success message
-                navigate('/'); // Redirect to the main page
+                if (rememberMe) {
+                    localStorage.setItem('userData', JSON.stringify({ username, email, password }));
+                } else {
+                    localStorage.removeItem('userData');
+                }
+                navigate('/'); // Redirect to the main page after successful sign-up
             } else {
-                alert(result.message); // Show error message
+                alert(result.message); // Show error message, stay on the same page
             }
         } catch (error) {
             console.error('Error during sign-up:', error);
             alert('An error occurred. Please try again later.');
         }
-    
-
-        if (rememberMe) {
-            localStorage.setItem('userData', JSON.stringify({ username, email, password }));
-        } else {
-            localStorage.removeItem('userData');
-        }
-
-        // Form data is valid, proceed with form submission
-        alert('Form submitted successfully!');
-        navigate('/'); // Redirect to the main page
     };
 
     return (

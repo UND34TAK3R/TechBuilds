@@ -13,7 +13,27 @@ h1{
   padding: 20px; /* Add padding around the container */
 }
 
+.login-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background-color: #f4f4f4; /* Light gray background for contrast */
+  padding: 20px; /* Add padding around the container */
+}
+
 .sign-up-form {
+  background: #ffffff; /* White background for the form */
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  width: 100%;
+  max-width: 400px; /* Set max-width to prevent it from stretching too wide */
+  box-sizing: border-box; /* Ensure padding is included in width */
+}
+
+.login-form {
   background: #ffffff; /* White background for the form */
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);

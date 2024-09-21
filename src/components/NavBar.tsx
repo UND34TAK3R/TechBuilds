@@ -45,8 +45,8 @@ function NavBar() {
           </ul>
           <form>
             <div className="d-flex flex-column">
-                <Link to="signup" className="btn btn-outline-success mb-2" id='btn'>Sign Up</Link>
-                <Link className="btn btn-outline-success" to="login" id='btn'>Login</Link>
+                <Link to="/signup" className="btn btn-outline-success mb-2" id='btn'>Sign Up</Link>
+                <Link className="btn btn-outline-success" to="/login" id='btn'>Login</Link>
             </div>
           </form>
         </div>

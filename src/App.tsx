@@ -12,6 +12,7 @@ import PreBuilt from './components/Prebuilt';
 import Parts from './components/Parts';
 import SignUp from './components/SignUp'; 
 import Login from './components/Login';
+import ForgotPasswd from './components/ForgotPasswd';
 
 function App() {
   return (
@@ -25,10 +26,11 @@ function RoutesWrapper() {
   const location = useLocation();
   const isSignUpPage = location.pathname === '/signup';
   const isLoginPage = location.pathname === '/login';
+  const isForgotPasswdPage = location.pathname === '/forgotpasswd';
 
   return (
     <>
-      {!isSignUpPage && !isLoginPage && <NavBar />}
+      {!isSignUpPage && !isLoginPage && !isForgotPasswdPage && <NavBar />}
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="Builder" element={<Builder />} />
@@ -38,9 +40,9 @@ function RoutesWrapper() {
         <Route path="Contact" element={<Contact />} />
         <Route path="signup" element={<SignUp />} />
         <Route path="login" element={<Login />}/>
+        <Route path="forgotpasswd" element={<ForgotPasswd />}/>
       </Routes>
     </>
   );
 }
-
 export default App;

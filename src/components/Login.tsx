@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import '../css/SignUpForm.css';
 
 function Login() {
@@ -9,57 +9,52 @@ function Login() {
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault(); // Prevents the default form submission behavior
 
-        const form = event.currentTarget; // Gets the form element
+        const form = event.currentTarget;
         const email = form.Email.value;
         const password = form.Password.value;
-
-        // Additional validation checks (e.g., password rules)
-        const passwordRegex = /^(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-        if (!passwordRegex.test(password)) {
-            alert('Password must have at least 8 characters, including one number and one special character.');
-            return;
-        }
 
         const userData = { email, password };
 
         try {
-            const response = await fetch('http://localhost:5500/signup', {
-                method: 'GET',
+            const response = await fetch('http://localhost:5500/login', {
+                method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify(userData),
             });
-    
+
             const result = await response.json();
-    
+
             if (response.ok) {
-                alert(result.message); // Show success message
-                navigate('/'); // Redirect to the main page
+                alert('Login successful!');
+
+                // If login is successful, redirect to the homepage
+                navigate('/');
+
+                // Optionally save JWT or session info
+                // e.g., localStorage.setItem('token', result.token);
+
             } else {
-                alert(result.message); // Show error message
+                alert(result.message); // Display error message from the server
             }
         } catch (error) {
-            console.error('Error during sign-up:', error);
+            console.error('Error during login:', error);
             alert('An error occurred. Please try again later.');
         }
-    
 
+        // Handle "Remember me" option
         if (rememberMe) {
-            localStorage.setItem('userData', JSON.stringify({email, password }));
+            localStorage.setItem('userData', JSON.stringify({ email, password }));
         } else {
             localStorage.removeItem('userData');
         }
-
-        // Form data is valid, proceed with form submission
-        alert('Form submitted successfully!');
-        navigate('/'); // Redirect to the main page
     };
 
     return (
-        <div className="sign-up-container">
-            <div className="sign-up-form">
-                <h1>Sign Up</h1>
+        <div className="login-container">
+            <div className="login-form">
+                <h1>Login</h1>
                 <form onSubmit={handleSubmit} noValidate className="container">
                     <div className="inputbox">
                         <label className="label" htmlFor="Email">Email: </label>
@@ -83,14 +78,22 @@ function Login() {
                             required
                             pattern="(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}"
                         />
+                        <input 
+                        type="checkbox" 
+                        id="Remember" 
+                        name="Remember"
+                        className="check"
+                        checked={rememberMe}
+                        onChange={() => setRememberMe(prev => !prev)}
+                        />
+                        <label htmlFor="Remember">Remember me</label><br></br>
+                    
+                        <small><Link to="/forgotpasswd">Don't remember your password?</Link></small><br></br>
+                        <small><Link to="/signup">Don't have an account?</Link></small>
                     </div>
-                    <input type="checkbox" 
-                            id="Remember" 
-                            name="Remember"
-                            className="check"
-                            checked={rememberMe}
-                            onChange={() => setRememberMe(prev => !prev)}/><label id='Remember' htmlFor="Remember">Remember me</label>
-                    <div className='inputbox'><button className="btn" type="submit">Sign Up</button></div>
+                    <div className='inputbox'>
+                        <button className="btn" type="submit">Login</button>
+                    </div>
                 </form>
             </div>
         </div>
