@@ -104,7 +104,7 @@ function SignUp() {
                             className="check"
                             checked={rememberMe}
                             onChange={() => setRememberMe(prev => !prev)}/><label id='Remember' htmlFor="Remember">Remember me</label>
-                    <div className='inputbox'><button className="btn" type="submit">Sign Up</button></div>
+                    <div className='inputbox'><button className="btn" id="signup" type="submit">Sign Up</button></div>
                 </form>
             </div>
         </div>

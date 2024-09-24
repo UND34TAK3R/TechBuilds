@@ -2,6 +2,11 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import '../css/SignUpForm.css';
 
+const NOT_LOGGED_IN = false;
+const LOGGED_IN = true;
+let status = NOT_LOGGED_IN;
+
+
 function Login() {
     const [rememberMe, setRememberMe] = useState(false);
     const navigate = useNavigate(); // Hook for navigation
@@ -28,6 +33,7 @@ function Login() {
 
             if (response.ok) {
                 alert('Login successful!');
+                status = LOGGED_IN;
 
                 // If login is successful, redirect to the homepage
                 navigate('/');

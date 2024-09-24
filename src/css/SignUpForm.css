@@ -62,7 +62,7 @@ h1{
   box-sizing: border-box;
 }
 
-button.btn {
+button.signup {
   background-color: #007bff; /* Blue button */
   color: white;
   padding: 12px 20px;
@@ -77,12 +77,12 @@ button.btn {
   transition: background-color 0.3s, transform 0.2s; /* Smooth transition for background and scale effect */
 }
 
-button.btn:hover {
+button.signup:hover {
   background-color: #0056b3; /* Darker blue for hover effect */
   transform: scale(1.05); /* Slightly scale up on hover */
 }
 
-button.btn:focus {
+button.signup:focus {
   outline: none; /* Remove default outline */
   box-shadow: 0 0 0 3px rgba(38, 143, 255, 0.5); /* Add a custom focus ring */
 }
@@ -142,37 +142,6 @@ h1{
   border: 1px solid #ddd;
   border-radius: 4px;
   box-sizing: border-box;
-}
-
-button.btn {
-  background-color: #007bff; /* Blue button */
-  color: white;
-  padding: 12px 20px;
-  width: 100%;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 16px;
-  font-weight: bold; /* Bold text */
-  text-transform: uppercase; /* Uppercase text */
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
-  transition: background-color 0.3s, transform 0.2s; /* Smooth transition for background and scale effect */
-}
-
-button.btn:hover {
-  background-color: #0056b3; /* Darker blue for hover effect */
-  transform: scale(1.05); /* Slightly scale up on hover */
-}
-
-button.btn:focus {
-  outline: none; /* Remove default outline */
-  box-shadow: 0 0 0 3px rgba(38, 143, 255, 0.5); /* Add a custom focus ring */
-}
-
-.small-text {
-  display: block;
-  margin-top: 5px;
-  color: #666;
 }
 
 .check{
