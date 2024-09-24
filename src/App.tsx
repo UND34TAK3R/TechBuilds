@@ -13,6 +13,7 @@ import Parts from './components/Parts';
 import SignUp from './components/SignUp'; 
 import Login from './components/Login';
 import ForgotPasswd from './components/ForgotPasswd';
+import ChangePassword from './components/ChangePassword';
 
 function App() {
   return (
@@ -27,10 +28,11 @@ function RoutesWrapper() {
   const isSignUpPage = location.pathname === '/signup';
   const isLoginPage = location.pathname === '/login';
   const isForgotPasswdPage = location.pathname === '/forgotpasswd';
+  const isChangePasswordPage = location.pathname.startsWith('/reset-password'); // Update this line
 
   return (
     <>
-      {!isSignUpPage && !isLoginPage && !isForgotPasswdPage && <NavBar />}
+      {!isSignUpPage && !isLoginPage && !isForgotPasswdPage && !isChangePasswordPage && <NavBar />}
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="Builder" element={<Builder />} />
@@ -39,10 +41,12 @@ function RoutesWrapper() {
         <Route path="Benchmark" element={<Benchmark />} />
         <Route path="Contact" element={<Contact />} />
         <Route path="signup" element={<SignUp />} />
-        <Route path="login" element={<Login />}/>
-        <Route path="forgotpasswd" element={<ForgotPasswd />}/>
+        <Route path="login" element={<Login />} />
+        <Route path="forgotpasswd" element={<ForgotPasswd />} />
+        <Route path="/changepassword/:token" element={<ChangePassword />} /> {/* Updated route */}
       </Routes>
     </>
   );
 }
+
 export default App;
