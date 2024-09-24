@@ -69,7 +69,7 @@ function SignUp() {
                             id="Username" 
                             name="Username"
                             className="Input" 
-                            placeholder="Please Input a username" 
+                            placeholder="Username" 
                             required
                         />
                     </div>
@@ -80,7 +80,7 @@ function SignUp() {
                             id="Email" 
                             name="Email" 
                             className="Input" 
-                            placeholder="Please Input a valid email" 
+                            placeholder="Email" 
                             required
                         />
                     </div>
@@ -91,7 +91,7 @@ function SignUp() {
                             id="Password" 
                             name="Password"
                             className="Input" 
-                            placeholder="Please Input a valid Password" 
+                            placeholder="Password" 
                             required
                             pattern="(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}"
                             title="Password must have at least 8 characters, including one number and one special character."
