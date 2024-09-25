@@ -12,16 +12,17 @@ function NavBar() {
     const token = localStorage.getItem('token');
     if (token) {
       // Verify the token with the backend
-      axios.get('/user/status', {
+      axios.get('http://localhost:5500/user/status', {
         headers: {
           Authorization: `Bearer ${token}`,
         },
-      })
+      })      
       .then((response) => {
         if (response.status === 200) {
           setIsLoggedIn(true);
           console.log(response.data);
-          setUsername(response.data.username); // Ensure this matches your API response
+          console.log(response.data.username);
+          setUsername(response.data.username); 
         }
       })
       .catch((error) => {

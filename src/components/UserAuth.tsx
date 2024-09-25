@@ -14,6 +14,7 @@ function useAuth() {
       .then((response) => {
         if (response.status === 200) {
           setIsLoggedIn(true); // User is logged in
+          console.log(response.data);
         } else {
           setIsLoggedIn(false); // User is not logged in
         }

@@ -98,7 +98,8 @@ app.post('/login', async (req, res) => {
     }
 
     // Generate a JWT token with an expiration of 1 hour
-    const token = jwt.sign({ id: user.id, email: user.email }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '1h' });
+    const token = jwt.sign({ id: user.user_id, email: user.email }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '1h' });
+
 
     res.status(200).json({ message: 'Login successful', token }); // Send the token in response
   } catch (err) {
@@ -110,7 +111,7 @@ app.post('/login', async (req, res) => {
 // Authenticated route to check if token is valid and user is logged in
 app.get('/user/status', authenticateToken, async (req, res) => {
   try {
-    const userId = req.user.id; // Use req.user.id from the middleware
+    const userId = req.user.id; // Should now hold the correct user_id from the JWT
     const [rows] = await connection.promise().query('SELECT username FROM users WHERE user_id = ?', [userId]);
 
     if (rows.length > 0) {
@@ -123,6 +124,7 @@ app.get('/user/status', authenticateToken, async (req, res) => {
     res.status(500).json({ message: 'Internal server error' });
   }
 });
+
 
 // Start the server
 const PORT = process.env.PORT || 5500;
