@@ -8,7 +8,7 @@ function useAuth() {
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (token) {
-      axios.get('http://localhost:5500/user/status', {
+      axios.get('/user/status', {
         headers: { Authorization: `Bearer ${token}` }
       })
       .then((response) => {

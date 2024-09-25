@@ -8,47 +8,45 @@ function Login() {
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-
+    
         const form = event.currentTarget;
         const email = form.Email.value;
         const password = form.Password.value;
-
+    
         const userData = { email, password };
-
+    
         try {
-            const response = await fetch('http://localhost:5500/login', {
+            const response = await fetch('http://localhost:5500/login', { // Ensure this is the correct port
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify(userData),
             });
-
-            const result = await response.json();
-
+    
+            // Check if the response is successful
             if (response.ok) {
+                const result = await response.json(); // Now it's safe to parse JSON
                 console.log('Login successful:', result);
-                // Save token and username to localStorage
+                // Save token to localStorage
                 localStorage.setItem('token', result.token);
-                if (result.username) {
-                    localStorage.setItem('username', result.username); // Save username if provided
-                }
-                navigate('/'); // Redirect to home page
+                navigate('/');
             } else {
-                alert(result.message); // Display error message from the server
+                const errorResult = await response.text(); // Get error message
+                alert(errorResult || 'An error occurred during login.'); // Display error message from the server
             }
         } catch (error) {
             console.error('Error during login:', error);
             alert('An error occurred. Please try again later.');
         }
-
+    
         // Handle "Remember me" option
         if (rememberMe) {
             localStorage.setItem('userData', JSON.stringify({ email, password }));
         } else {
             localStorage.removeItem('userData');
         }
-    };
+    };    
 
     return (
         <div className="login-container">

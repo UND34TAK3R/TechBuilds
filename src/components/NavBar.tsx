@@ -93,7 +93,7 @@ function NavBar() {
               </>
             ) : (
               <li className="nav-item">
-                <Link className="btn btn-outline-primary" to="Login">Login</Link>
+                <Link className="btn btn-outline-primary" to="/login">Login</Link>
               </li>
             )}
           </ul>
