@@ -1,8 +1,45 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import '../css/NavBar.css';
-
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 
 function NavBar() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [username, setUsername] = useState('');
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      // Verify the token with the backend
+      axios.get('/user/status', {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((response) => {
+        if (response.status === 200) {
+          setIsLoggedIn(true);
+          console.log(response.data);
+          setUsername(response.data.username); // Ensure this matches your API response
+        }
+      })
+      .catch((error) => {
+        console.error('Error fetching user status:', error);
+        setIsLoggedIn(false);
+      });
+    } else {
+      setIsLoggedIn(false); // No token means user is not logged in
+    }
+  }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    setIsLoggedIn(false);
+    setUsername(''); // Clear the username on logout
+    navigate('/'); // Redirect to homepage or login page after logout
+  };
+
   return (
     <nav className="navbar navbar-expand-lg bg-body-tertiary">
       <div className="container-fluid">
@@ -21,7 +58,7 @@ function NavBar() {
             <li className="nav-item dropdown">
               <Link
                 className="nav-link dropdown-toggle"
-               	to="prebuilt"
+                to="prebuilt"
                 id="navbarDropdown"
                 role="button"
                 data-bs-toggle="dropdown"
@@ -33,7 +70,7 @@ function NavBar() {
                 <li><Link className="dropdown-item" to="/">Desktops</Link></li>
                 <li><Link className="dropdown-item" to="/">Laptops</Link></li>
               </ul>
-	          </li>
+            </li>
             <li className="nav-item">
               <Link className="nav-link active" to="Parts">Parts</Link>
             </li>
@@ -44,11 +81,22 @@ function NavBar() {
               <Link className="nav-link active" to="Contact">Contact</Link>
             </li>
           </ul>
-          <form>
-            <div className="d-flex flex-column">
-                <Link className="btn btn-outline-success" to="/login" id='btn'>Login</Link>
-            </div>
-          </form>
+          <ul className="navbar-nav ml-auto">
+            {isLoggedIn ? (
+              <>
+                <li className="nav-item">
+                  <span className="nav-link">Welcome, {username}</span>
+                </li>
+                <li className="nav-item">
+                  <button className="btn btn-outline-danger" onClick={handleLogout}>Logout</button>
+                </li>
+              </>
+            ) : (
+              <li className="nav-item">
+                <Link className="btn btn-outline-primary" to="Login">Login</Link>
+              </li>
+            )}
+          </ul>
         </div>
       </div>
     </nav>

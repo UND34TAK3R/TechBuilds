@@ -2,17 +2,12 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import '../css/SignUpForm.css';
 
-const NOT_LOGGED_IN = false;
-const LOGGED_IN = true;
-let status = NOT_LOGGED_IN;
-
-
 function Login() {
     const [rememberMe, setRememberMe] = useState(false);
-    const navigate = useNavigate(); // Hook for navigation
+    const navigate = useNavigate();
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-        event.preventDefault(); // Prevents the default form submission behavior
+        event.preventDefault();
 
         const form = event.currentTarget;
         const email = form.Email.value;
@@ -32,15 +27,13 @@ function Login() {
             const result = await response.json();
 
             if (response.ok) {
-                alert('Login successful!');
-                status = LOGGED_IN;
-
-                // If login is successful, redirect to the homepage
-                navigate('/');
-
-                // Optionally save JWT or session info
-                // e.g., localStorage.setItem('token', result.token);
-
+                console.log('Login successful:', result);
+                // Save token and username to localStorage
+                localStorage.setItem('token', result.token);
+                if (result.username) {
+                    localStorage.setItem('username', result.username); // Save username if provided
+                }
+                navigate('/'); // Redirect to home page
             } else {
                 alert(result.message); // Display error message from the server
             }
@@ -84,17 +77,18 @@ function Login() {
                             required
                             pattern="(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}"
                         />
-                        <input 
-                        type="checkbox" 
-                        id="Remember" 
-                        name="Remember"
-                        className="check"
-                        checked={rememberMe}
-                        onChange={() => setRememberMe(prev => !prev)}
-                        />
-                        <label htmlFor="Remember">Remember me</label><br></br>
-                    
-                        <small><Link to="/forgotpasswd">Don't remember your password?</Link></small><br></br>
+                        <div>
+                            <input 
+                                type="checkbox" 
+                                id="Remember" 
+                                name="Remember"
+                                className="check"
+                                checked={rememberMe}
+                                onChange={() => setRememberMe(prev => !prev)}
+                            />
+                            <label htmlFor="Remember">Remember me</label>
+                        </div>
+                        <small><Link to="/forgotpasswd">Don't remember your password?</Link></small><br />
                         <small><Link to="/signup">Don't have an account?</Link></small>
                     </div>
                     <div className='inputbox'>
