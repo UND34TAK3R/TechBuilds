@@ -62,7 +62,22 @@ h1{
   box-sizing: border-box;
 }
 
-button.signup {
+#login {
+  background-color: #007bff; /* Blue button */
+  color: white;
+  padding: 12px 20px;
+  width: 100%;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold; /* Bold text */
+  text-transform: uppercase; /* Uppercase text */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  transition: background-color 0.3s, transform 0.2s; /* Smooth transition for background and scale effect */
+}
+
+#signup {
   background-color: #007bff; /* Blue button */
   color: white;
   padding: 12px 20px;

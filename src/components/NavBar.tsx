@@ -86,7 +86,7 @@ function NavBar() {
             {isLoggedIn ? (
               <>
                 <li className="nav-item">
-                  <span className="nav-link">Welcome, {username}</span>
+                  <span className="nav-link">{username}</span>
                 </li>
                 <li className="nav-item">
                   <button className="btn btn-outline-danger" onClick={handleLogout}>Logout</button>

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../css/SignUpForm.css';
+import { Link } from 'react-router-dom';
 
 function SignUp() {
     const [rememberMe, setRememberMe] = useState(false);
@@ -104,6 +105,8 @@ function SignUp() {
                             className="check"
                             checked={rememberMe}
                             onChange={() => setRememberMe(prev => !prev)}/><label id='Remember' htmlFor="Remember">Remember me</label>
+                            <br></br>
+                            <small><Link to="/login">Already have an account?</Link></small>
                     <div className='inputbox'><button className="btn" id="signup" type="submit">Sign Up</button></div>
                 </form>
             </div>

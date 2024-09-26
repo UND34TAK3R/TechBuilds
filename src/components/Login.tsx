@@ -90,7 +90,7 @@ function Login() {
                         <small><Link to="/signup">Don't have an account?</Link></small>
                     </div>
                     <div className='inputbox'>
-                        <button className="btn" type="submit">Login</button>
+                        <button className="btn" id="login"type="submit">Login</button>
                     </div>
                 </form>
             </div>
