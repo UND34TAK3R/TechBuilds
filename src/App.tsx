@@ -14,6 +14,7 @@ import SignUp from './components/SignUp';
 import Login from './components/Login';
 import ForgotPasswd from './components/ForgotPasswd';
 import ChangePassword from './components/ChangePassword';
+import Layout from './components/Layout/Layout';
 
 function App() {
   return (
@@ -28,12 +29,12 @@ function RoutesWrapper() {
   const isSignUpPage = location.pathname === '/signup';
   const isLoginPage = location.pathname === '/login';
   const isForgotPasswdPage = location.pathname === '/forgotpasswd';
-  const isChangePasswordPage = location.pathname.startsWith('/reset-password'); // Update this line
+  const isChangePasswordPage = location.pathname.startsWith('/reset-password');  // Update this line
 
   return (
     <>
-      {!isSignUpPage && !isLoginPage && !isForgotPasswdPage && !isChangePasswordPage && <NavBar />}
-      <Routes>
+      {!isSignUpPage && !isLoginPage && !isForgotPasswdPage && !isChangePasswordPage  && <NavBar />}
+      <Routes >
         <Route path="/" element={<HomePage />} />
         <Route path="Builder" element={<Builder />} />
         <Route path="PreBuilt" element={<PreBuilt />} />

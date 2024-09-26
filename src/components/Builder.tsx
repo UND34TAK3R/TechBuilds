@@ -3,6 +3,7 @@ import '../css/Builder.scss';
 import useAuth from './UserAuth'; // Import the custom hook
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
+import Header from './Layout/Header';
 
 function Builder() {
   const { isLoggedIn, loading } = useAuth(); // Use the hook with loading and isLoggedIn
@@ -45,6 +46,7 @@ function Builder() {
   
   
 return(
+ <> 
     <table className="table">
   <thead>
     <tr>
@@ -138,6 +140,7 @@ return(
     </tr>
   </tbody>
 </table>
+</>
 )}
 
 const styles = {
