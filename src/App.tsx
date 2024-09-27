@@ -14,6 +14,15 @@ import SignUp from './components/SignUp';
 import Login from './components/Login';
 import ForgotPasswd from './components/ForgotPasswd';
 import ChangePassword from './components/ChangePassword';
+import CPU from './components/Parts/CPU';
+import CPU_Cooler from './components/Parts/CPU_Cooler';
+import GPU from './components/Parts/GPU';
+import Motherboard from './components/Parts/Motherboard';
+import RAM from './components/Parts/RAM';
+import Storage from './components/Parts/Storage';
+import PSU from './components/Parts/PSU';
+import NetAdapter from './components/Parts/NetAdapter';
+import OS from './components/Parts/OS';
 
 function App() {
   return (
@@ -44,6 +53,15 @@ function RoutesWrapper() {
         <Route path="login" element={<Login />} />
         <Route path="forgotpasswd" element={<ForgotPasswd />} />
         <Route path="/changepassword/:token" element={<ChangePassword />} /> {/* Updated route */}
+        <Route path="/CPU" element={<CPU />} />
+        <Route path="/CPU_Cooler" element={<CPU_Cooler />} />
+        <Route path="/GPU" element={<GPU />} />
+        <Route path="/Motherboard" element={<Motherboard />} />
+        <Route path="/RAM" element={<RAM />} />
+        <Route path="/Storage" element={<Storage />} />
+        <Route path="/PSU" element={<PSU />} />
+        <Route path="/NetAdapter" element={<NetAdapter />} />
+        <Route path="/OS" element={<OS />} />
       </Routes>
     </>
   );

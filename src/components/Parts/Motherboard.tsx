@@ -20,6 +20,6 @@ function Motherboard(){
             </table>
         </>
     )
-}
+};
 
 export default Motherboard;
