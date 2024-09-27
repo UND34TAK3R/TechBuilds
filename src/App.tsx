@@ -14,7 +14,6 @@ import SignUp from './components/SignUp';
 import Login from './components/Login';
 import ForgotPasswd from './components/ForgotPasswd';
 import ChangePassword from './components/ChangePassword';
-import Layout from './components/Layout/Layout';
 
 function App() {
   return (
