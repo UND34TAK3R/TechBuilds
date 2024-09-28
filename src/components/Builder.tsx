@@ -57,6 +57,7 @@ return(
             <th scope="col" colSpan={2}>Description</th>
             <th scope="col">Wattage</th>
             <th scope="col">Price</th>
+            <th scope="col">Purchased</th>
           </tr>
         </thead>
         <tbody>

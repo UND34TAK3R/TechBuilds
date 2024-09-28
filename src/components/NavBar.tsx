@@ -68,7 +68,7 @@ function NavBar() {
                 Prebuilt
               </Link>
               <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
-                <li><Link className="dropdown-item" to="/">Desktops</Link></li>
+                <li><Link className="dropdown-item" to="/Desktop">Desktops</Link></li>
                 <li><Link className="dropdown-item" to="/">Laptops</Link></li>
               </ul>
             </li>
@@ -79,7 +79,7 @@ function NavBar() {
               <Link className="nav-link active" to="Benchmark">Benchmark</Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link active" to="Contact">Contact</Link>
+              <Link className="nav-link active" to="Contact">Contact Us</Link>
             </li>
           </ul>
           <ul className="navbar-nav ml-auto">

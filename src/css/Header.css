@@ -1,0 +1,6 @@
+.full-width-banner {
+    width: 100vw; /* 100% of the viewport width */
+    background-color: #204b7c; /* Example color */
+    padding: 25px; /* Padding for spacing */
+    color: white; /* Text color */
+  }

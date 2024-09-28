@@ -1,8 +1,9 @@
+import Header from './Layout/Header';
 function Benchmark()
 {
 return(
     <>
-        <h1>Benchmark</h1>
+        <Header />
     </>
 )}
 export default Benchmark

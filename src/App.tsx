@@ -23,6 +23,9 @@ import Storage from './components/Parts/Storage';
 import PSU from './components/Parts/PSU';
 import NetAdapter from './components/Parts/NetAdapter';
 import OS from './components/Parts/OS';
+import Desktop from './components/Prebuilt/Desktop';
+import Laptop from './components/Prebuilt/Laptop';
+import Footer from './components/Layout/Footer';
 
 function App() {
   return (
@@ -42,6 +45,7 @@ function RoutesWrapper() {
   return (
     <>
       {!isSignUpPage && !isLoginPage && !isForgotPasswdPage && !isChangePasswordPage  && <NavBar />}
+      {!isSignUpPage && !isLoginPage && !isForgotPasswdPage && !isChangePasswordPage  && <Footer />}
       <Routes >
         <Route path="/" element={<HomePage />} />
         <Route path="Builder" element={<Builder />} />
@@ -62,6 +66,8 @@ function RoutesWrapper() {
         <Route path="/PSU" element={<PSU />} />
         <Route path="/NetAdapter" element={<NetAdapter />} />
         <Route path="/OS" element={<OS />} />
+        <Route path="/Desktop" element={<Desktop />} />
+        <Route path="/Laptop" element={<Laptop />} />
       </Routes>
     </>
   );
