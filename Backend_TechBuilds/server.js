@@ -178,6 +178,16 @@ app.get('/user/status', authenticateToken, async (req, res) => {
   }
 });
 
+app.get('/CPU', (req, res) => {
+  connection.query('SELECT * FROM cpu_desktop', (err, results) => {
+    if (err) {
+      console.error('Error fetching data:', err);
+      return res.status(500).json({ error: 'Internal server error' });
+    }
+    res.json(results); // Directly send the results
+  });
+});
+
 
 // Start the server
 const PORT = process.env.PORT || 5500;
