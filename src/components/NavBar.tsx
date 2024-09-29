@@ -69,7 +69,7 @@ function NavBar() {
               </Link>
               <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
                 <li><Link className="dropdown-item" to="/Desktop">Desktops</Link></li>
-                <li><Link className="dropdown-item" to="/">Laptops</Link></li>
+                <li><Link className="dropdown-item" to="/Laptop">Laptops</Link></li>
               </ul>
             </li>
             <li className="nav-item">

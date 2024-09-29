@@ -108,6 +108,59 @@ app.post('/login', async (req, res) => {
   }
 });
 
+
+const transporter = nodemailer.createTransport({
+  service: 'outlook',
+  auth: {
+    user: process.env.EMAIL_USER, // Your email
+    pass: process.env.EMAIL_PASS, // Your email password or an app-specific password
+  }
+});
+
+app.post('/forgotpasswd', async (req, res) => {
+  const { email } = req.body;
+
+  if (!email) {
+    return res.status(400).json({ message: 'Email is required' });
+  }
+
+  try {
+    const [rows] = await connection.promise().query('SELECT * FROM users WHERE email = ?', [email]);
+
+    if (rows.length === 0) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    const user = rows[0];
+    const resetToken = crypto.randomBytes(32).toString('hex');
+    const resetURL = `http://localhost:5500/reset-password/${resetToken}`;
+
+    // Here, save the resetToken to the database with an expiration time (optional)
+
+    // Send email
+    const mailOptions = {
+      from: `"TechBuilds"<${process.env.EMAIL_USER}>`,
+      to: email,
+      subject: 'Password Reset Request',
+      text: `You requested a password reset. Please click the link to reset your password: ${resetURL}`,
+      html: `<p>You requested a password reset. Please click <a href="${resetURL}">here</a> to reset your password.</p>`
+    };
+
+    transporter.sendMail(mailOptions, (error, info) => {
+      if (error) {
+        console.error('Error sending email:', error);
+        return res.status(500).json({ message: 'Error sending email' });
+      }
+      res.status(200).json({ message: 'Email sent successfully!' });
+    });
+
+  } catch (err) {
+    console.error('Error during password reset request:', err);
+    res.status(500).json({ message: 'An error occurred. Please try again later.' });
+  }
+});
+
+
 // Authenticated route to check if token is valid and user is logged in
 app.get('/user/status', authenticateToken, async (req, res) => {
   try {
