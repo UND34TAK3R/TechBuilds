@@ -26,6 +26,7 @@ import OS from './components/Parts/OS';
 import Desktop from './components/Prebuilt/Desktop';
 import Laptop from './components/Prebuilt/Laptop';
 import Footer from './components/Layout/Footer';
+import Case from './components/Parts/Case';
 
 function App() {
   return (
@@ -68,6 +69,7 @@ function RoutesWrapper() {
         <Route path="/OS" element={<OS />} />
         <Route path="/Desktop" element={<Desktop />} />
         <Route path="/Laptop" element={<Laptop />} />
+        <Route path="/Case" element={<Case />} />
       </Routes>
     </>
   );

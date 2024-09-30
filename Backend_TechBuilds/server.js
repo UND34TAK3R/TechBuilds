@@ -189,6 +189,99 @@ app.get('/CPU', (req, res) => {
 });
 
 
+app.get('/Case', (req, res) => {
+  connection.query('SELECT * FROM pc_case', (err, results) => {
+    if (err) {
+      console.error('Error fetching data:', err);
+      return res.status(500).json({ error: 'Internal server error' });
+    }
+    res.json(results); // Directly send the results
+  });
+});
+
+app.get('/CPU_Cooler', (req, res) => {
+  connection.query('SELECT * FROM cpu_coolers', (err, results) => {
+    if (err) {
+      console.error('Error fetching data:', err);
+      return res.status(500).json({ error: 'Internal server error' });
+    }
+    res.json(results); // Directly send the results
+  });
+});
+
+app.get('/GPU', (req, res) => {
+  connection.query('SELECT * FROM desktop_gpu', (err, results) => {
+    if (err) {
+      console.error('Error fetching data:', err);
+      return res.status(500).json({ error: 'Internal server error' });
+    }
+    res.json(results); // Directly send the results
+  });
+});
+
+app.get('/MB', (req, res) => {
+  connection.query('SELECT * FROM motherboard', (err, results) => {
+    if (err) {
+      console.error('Error fetching data:', err);
+      return res.status(500).json({ error: 'Internal server error' });
+    }
+    res.json(results); // Directly send the results
+  });
+});
+
+app.get('/NetAdapter', (req, res) => {
+  connection.query('SELECT * FROM network_adapters', (err, results) => {
+    if (err) {
+      console.error('Error fetching data:', err);
+      return res.status(500).json({ error: 'Internal server error' });
+    }
+    res.json(results); // Directly send the results
+  });
+});
+
+app.get('/OS', (req, res) => {
+  connection.query('SELECT * FROM os', (err, results) => {
+    if (err) {
+      console.error('Error fetching data:', err);
+      return res.status(500).json({ error: 'Internal server error' });
+    }
+    res.json(results); // Directly send the results
+  });
+});
+
+
+app.get('/PSU', (req, res) => {
+  connection.query('SELECT * FROM psu', (err, results) => {
+    if (err) {
+      console.error('Error fetching data:', err);
+      return res.status(500).json({ error: 'Internal server error' });
+    }
+    res.json(results); // Directly send the results
+  });
+});
+
+
+app.get('/RAM', (req, res) => {
+  connection.query('SELECT * FROM ram', (err, results) => {
+    if (err) {
+      console.error('Error fetching data:', err);
+      return res.status(500).json({ error: 'Internal server error' });
+    }
+    res.json(results); // Directly send the results
+  });
+});
+
+
+app.get('/Storage', (req, res) => {
+  connection.query('SELECT * FROM storage', (err, results) => {
+    if (err) {
+      console.error('Error fetching data:', err);
+      return res.status(500).json({ error: 'Internal server error' });
+    }
+    res.json(results); // Directly send the results
+  });
+});
+
 // Start the server
 const PORT = process.env.PORT || 5500;
 app.listen(PORT, () => {

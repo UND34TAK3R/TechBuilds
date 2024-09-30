@@ -2,12 +2,12 @@ import { useEffect, useState } from 'react';
 
 interface Item {
     cpu_id: number;
-    id: number;
     name: string;
     cores: string;
     architecture: string;
     base_clock: string;
     boost_clock: string;
+    graphics: string;
     tdp: string;
     price: string;
 }
@@ -37,7 +37,7 @@ function CPU() {
                         <th scope="col">Architecture</th>
                         <th scope="col">Base Clock</th>
                         <th scope="col">Boost Clock</th>
-                        <th scope="col">TDP</th>
+                        <th scope="col">Graphics</th>
                         <th scope="col">Price</th>
                         <th scope="col">Selection</th>
                     </tr>
@@ -50,7 +50,7 @@ function CPU() {
                             <td>{item.architecture}</td>
                             <td>{item.base_clock}</td>
                             <td>{item.boost_clock}</td>
-                            <td>{item.tdp}</td>
+                            <td>{item.graphics}</td>
                             <td>{item.price}</td>
                             <td><button>Add To Build</button></td>
                         </tr>
