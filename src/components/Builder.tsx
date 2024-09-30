@@ -4,19 +4,26 @@ import useAuth from './UserAuth'; // Import the custom hook
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import Header from './Layout/Header';
+import NewBuild from './NewBuild';
 
 function Builder() {
   const { isLoggedIn, loading } = useAuth(); // Use the hook with loading and isLoggedIn
   const navigate = useNavigate();
   const [showLoginMessage, setShowLoginMessage] = useState(false);
+  const [showPopUp, setShowPopUp] = useState(false);
 
   useEffect(() => {
+    setShowPopUp(true);
     if (!isLoggedIn && !loading) {
       setShowLoginMessage(true);
     } else {
       setShowLoginMessage(false);
     }
   }, [isLoggedIn, loading, navigate]);
+
+  function handleClose() {
+    setShowPopUp(false);
+  }
 
   if (showLoginMessage) {
     return (
@@ -34,6 +41,7 @@ function Builder() {
       </div>
     );
   }
+
 
   
   if (loading) {
@@ -143,6 +151,8 @@ return(
           </tr>
       </tbody>
     </table>
+    <div><button>Save Build</button><button>New Build</button><button>Change Build</button></div>
+    {showPopUp && <NewBuild handleClose={handleClose} />}
 </>
 )}
 

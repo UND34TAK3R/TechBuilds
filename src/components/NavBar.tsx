@@ -20,8 +20,6 @@ function NavBar() {
       .then((response) => {
         if (response.status === 200) {
           setIsLoggedIn(true);
-          console.log(response.data);
-          console.log(response.data.username);
           setUsername(response.data.username); 
         }
       })

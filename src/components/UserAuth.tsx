@@ -4,6 +4,7 @@ import axios from 'axios';
 function useAuth() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [loading, setLoading] = useState(true); // Add a loading state
+  const [userId, setUserId] = useState<string | null>(null);
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -15,6 +16,7 @@ function useAuth() {
         .then((response) => {
           if (response.status === 200) {
             setIsLoggedIn(true); // User is logged in
+            setUserId(response.data.user_id);
           } else {
             setIsLoggedIn(false); // User is not logged in
           }
@@ -32,7 +34,7 @@ function useAuth() {
     }
   }, []);
 
-  return { isLoggedIn, loading };
+  return { isLoggedIn, loading, userId };
 }
 
 export default useAuth;

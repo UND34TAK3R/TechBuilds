@@ -165,10 +165,10 @@ app.post('/forgotpasswd', async (req, res) => {
 app.get('/user/status', authenticateToken, async (req, res) => {
   try {
     const userId = req.user.id; // Should now hold the correct user_id from the JWT
-    const [rows] = await connection.promise().query('SELECT username FROM users WHERE user_id = ?', [userId]);
+    const [rows] = await connection.promise().query('SELECT user_id, username FROM users WHERE user_id = ?', [userId]);
 
     if (rows.length > 0) {
-      res.json({ username: rows[0].username });
+      res.json({ user_id: rows[0].user_id, username: rows[0].username });
     } else {
       res.status(404).json({ message: 'User not found' });
     }
@@ -280,6 +280,28 @@ app.get('/Storage', (req, res) => {
     }
     res.json(results); // Directly send the results
   });
+});
+
+app.post('/NewBuild', async (req, res) => {
+  const { BuildName, BuildType, userId } = req.body;
+
+  if (!BuildName || !BuildType || !userId) {
+    return res.status(400).json({ message: 'All fields are required' });
+  }
+  
+  try {
+    const query = 'INSERT INTO build (build_name, build_type, user_id) VALUES (?, ?, ?)';
+    connection.query(query, [BuildName, BuildType, userId], (err) => {
+      if (err) {
+        console.error('Error inserting data:', err);
+        return res.status(500).json({ message: 'Error saving build data' });
+      }
+      res.status(201).json({ message: 'Build registered successfully' });
+    });
+  } catch (err) {
+    console.error('Error during build registration:', err);
+    res.status(500).json({ message: 'Error during build registration' });
+  }
 });
 
 // Start the server
