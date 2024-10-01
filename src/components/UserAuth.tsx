@@ -5,7 +5,7 @@ function useAuth() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [loading, setLoading] = useState(true); // Add a loading state
   const [userId, setUserId] = useState<string | null>(null);
-
+  
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (token) {

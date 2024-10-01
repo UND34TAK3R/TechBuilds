@@ -6,22 +6,42 @@ import nodemailer from 'nodemailer';
 import crypto from 'crypto';
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
+import { build } from 'vite';
 
 dotenv.config();
 
 // Middleware to authenticate JWT token
-function authenticateToken(req, res, next) {
+function authenticateUserToken(req, res, next) {
   const authHeader = req.headers['authorization'];
   const token = authHeader && authHeader.split(' ')[1];
   if (!token) return res.status(401).json({ message: 'Token required' });
 
   jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
     if (err) return res.status(403).json({ message: 'Invalid token' });
-    req.user = user;  // Attach user information to request object
+    req.user = user; // Attach user information to request object
+    next(); // Proceed to next middleware
+  });
+}
+
+// Middleware to authenticate build token
+function authenticateBuildToken(req, res, next) {
+  const authHeader = req.headers['authorization'];
+  const token = authHeader && authHeader.split(' ')[1];
+
+  if (!token) return res.status(401).json({ message: 'Token required' });
+  
+  jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, build) => {
+    if (err) return res.status(403).json({ message: 'Invalid token' });
+    req.build = build;  // Attach build information to request object
     next();  // Proceed to next middleware
   });
 }
 
+// Function to generate a build token
+function generateBuildToken(buildId, userId) {
+  const token = jwt.sign({ id: buildId, userId: userId }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '3h' });
+  return token;
+}
 const app = express();
 app.use(cors());
 app.use(express.json()); // Middleware to parse JSON
@@ -98,7 +118,7 @@ app.post('/login', async (req, res) => {
     }
 
     // Generate a JWT token with an expiration of 1 hour
-    const token = jwt.sign({ id: user.user_id, email: user.email }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '1h' });
+    const token = jwt.sign({ id: user.user_id, email: user.email }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '3h' });
 
 
     res.status(200).json({ message: 'Login successful', token }); // Send the token in response
@@ -162,7 +182,7 @@ app.post('/forgotpasswd', async (req, res) => {
 
 
 // Authenticated route to check if token is valid and user is logged in
-app.get('/user/status', authenticateToken, async (req, res) => {
+app.get('/user/status', authenticateUserToken, async (req, res) => {
   try {
     const userId = req.user.id; // Should now hold the correct user_id from the JWT
     const [rows] = await connection.promise().query('SELECT user_id, username FROM users WHERE user_id = ?', [userId]);
@@ -282,28 +302,6 @@ app.get('/Storage', (req, res) => {
   });
 });
 
-app.post('/NewBuild', async (req, res) => {
-  const { BuildName, BuildType, userId } = req.body;
-
-  if (!BuildName || !BuildType || !userId) {
-    return res.status(400).json({ message: 'All fields are required' });
-  }
-  
-  try {
-    const query = 'INSERT INTO build (build_name, build_type, user_id) VALUES (?, ?, ?)';
-    connection.query(query, [BuildName, BuildType, userId], (err) => {
-      if (err) {
-        console.error('Error inserting data:', err);
-        return res.status(500).json({ message: 'Error saving build data' });
-      }
-      res.status(201).json({ build_name: BuildName, message: 'Build created successfully' });
-    });
-  } catch (err) {
-    console.error('Error during build registration:', err);
-    res.status(500).json({ message: 'Error during build registration' });
-  }
-});
-
 app.get('/lastBuild/:userId', async (req, res) => {
   const userId = req.params.userId;
   try {
@@ -319,6 +317,82 @@ app.get('/lastBuild/:userId', async (req, res) => {
     res.status(500).json({ message: 'Internal server error' });
   }
 });
+
+app.post('/NewBuild', async (req, res) => {
+  const { BuildName, BuildType, userId } = req.body;
+
+  if (!BuildName || !BuildType || !userId) {
+    return res.status(400).json({ message: 'All fields are required' });
+  }
+  
+  try {
+    const query = 'INSERT INTO build (build_name, build_type, user_id) VALUES (?, ?, ?)';
+    connection.query(query, [BuildName, BuildType, userId], (err) => {
+      if (err) {
+        console.error('Error inserting data:', err);
+        return res.status(500).json({ message: 'Error saving build data' });
+      }
+      res.status(201).json({ message: 'Build registered successfully' });
+    });
+  } catch (err) {
+    console.error('Error during build registration:', err);
+    res.status(500).json({ message: 'Error during build registration' });
+  }
+});
+
+app.get('/build/status', authenticateBuildToken, async (req, res) => {
+  try {
+    const buildId = req.build.id; // Token should have a build_id attached
+
+    if (!buildId) {
+      return res.status(400).json({ message: 'Build ID not provided' });
+    }
+
+    const [rows] = await connection.promise().query('SELECT build_id FROM build WHERE build_id = ?', [buildId]);
+
+    if (rows.length > 0) {
+      res.json({ build_id: rows[0].build_id });
+    } else {
+      res.status(404).json({ message: 'Build not found' });
+    }
+  } catch (error) {
+    console.error('Error fetching build status:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
+
+
+app.post('/AddCPU', async (req, res) => {
+  const { build_id, cpu_id } = req.body;
+
+  if (!build_id || !cpu_id) {
+    return res.status(400).json({ message: 'All fields are required' });
+  }
+  
+  try {
+    // Query to insert cpu_id into the BUILD table if the build_id exists
+    const query = `
+      UPDATE BUILD 
+      SET cpu_id = ?
+      WHERE build_id = ?;
+
+    `;
+
+    // Execute the query
+    connection.query(query, [cpu_id, build_id], (err) => {
+      if (err) {
+        console.error('Error inserting data:', err);
+        return res.status(500).json({ message: 'Error saving build data' });
+      }
+      res.status(201).json({ message: 'Build registered successfully' });
+    });
+  } catch (err) {
+    console.error('Error during build registration:', err);
+    res.status(500).json({ message: 'Error during build registration' });
+  }
+});
+
+
 
 
 // Start the server

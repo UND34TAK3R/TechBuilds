@@ -49,7 +49,7 @@ function RoutesWrapper() {
       {!isSignUpPage && !isLoginPage && !isForgotPasswdPage && !isChangePasswordPage  && <Footer />}
       <Routes >
         <Route path="/" element={<HomePage />} />
-        <Route path="Builder" element={<Builder />} />
+        <Route path="/Builder" element={<Builder />} />
         <Route path="PreBuilt" element={<PreBuilt />} />
         <Route path="Parts" element={<Parts />} />
         <Route path="Benchmark" element={<Benchmark />} />

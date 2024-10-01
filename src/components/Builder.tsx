@@ -40,24 +40,25 @@ function Builder() {
       console.error('Error fetching last build:', error);
     }
   };
-  const handleNewBuild = async (newBuildData:any) => {
+  const handleNewBuild = async (newBuildData: any) => {
     try {
-      const response = await fetch('http://localhost:5500/NewBuild', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(newBuildData),
-      });
-      if (response.ok) {
-        fetchLastBuild(); // Fetch the last build again after creating a new build
-      } else {
-        console.error('Error creating new build');
-      }
+        const response = await fetch('http://localhost:5500/NewBuild', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(newBuildData),
+        });
+
+        if (response.ok) {
+            await fetchLastBuild(); // Ensure the fetch waits for completion
+        } else {
+            console.error('Error creating new build');
+        }
     } catch (error) {
-      console.error('Error creating new build:', error);
+        console.error('Error creating new build:', error);
     }
-  };
+};
 
   useEffect(() => {
     if (!hasBuild) {
@@ -100,7 +101,6 @@ function Builder() {
       </div>
     );
   }
-
   
 return(
  <> 
@@ -163,6 +163,7 @@ return(
           <th scope="row"><Link to="/PSU">PSU</Link></th>
             <td></td>
             <td></td>
+
             <td></td>
             <td><Link to="/PSU"><button className="btn btn-outline-dark">Add PSU</button></Link></td>
           </tr>
@@ -171,6 +172,7 @@ return(
             <td></td>
             <td></td>
             <td></td>
+
             <td><Link to="/Case"><button className="btn btn-outline-dark">Add Case</button></Link></td>
           </tr>
           <tr>
