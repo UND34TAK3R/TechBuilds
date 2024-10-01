@@ -296,11 +296,27 @@ app.post('/NewBuild', async (req, res) => {
         console.error('Error inserting data:', err);
         return res.status(500).json({ message: 'Error saving build data' });
       }
-      res.status(201).json({ message: 'Build registered successfully' });
+      res.status(201).json({ build_name: BuildName, message: 'Build created successfully' });
     });
   } catch (err) {
     console.error('Error during build registration:', err);
     res.status(500).json({ message: 'Error during build registration' });
+  }
+});
+
+app.get('/lastBuild/:userId', async (req, res) => {
+  const userId = req.params.userId;
+  try {
+    const [rows] = await connection.promise().query('SELECT build_name FROM build WHERE user_id = ? ORDER BY created_at DESC LIMIT 1', [userId]);
+    
+    if (rows.length > 0) {
+      res.json({ build_name: rows[0].build_name }); // Return the last build name
+    } else {
+      res.status(404).json({ message: 'No builds found' });
+    }
+  } catch (error) {
+    console.error('Error fetching last build:', error);
+    res.status(500).json({ message: 'Internal server error' });
   }
 });
 

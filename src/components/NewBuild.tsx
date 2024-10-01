@@ -1,22 +1,23 @@
+// Updated NewBuild component
 import React from "react";
 import '../css/NewBuild.css';
 import useAuth from "./UserAuth";
 
-function NewBuild({ handleClose }: any) {
+function NewBuild({ handleClose, handleNewBuild }: any) { // Add handleNewBuild to props
     const { userId } = useAuth();
+
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-        event.preventDefault(); // Prevents the default form submission behavior
-    
-        const form = event.currentTarget; // Gets the form element
+        event.preventDefault();
+        const form = event.currentTarget;
         const BuildName = form.BuildName.value;
         const BuildType = form.BuildType.value;
-    
-        // Simple client-side validation
+
+        // Client-side validation
         if (!BuildName || !BuildType) {
             alert('Please fill in all fields.');
             return;
         }
-    
+
         const BuildData = { BuildName, BuildType, userId };
 
         // Close the pop-up before making the request
@@ -30,14 +31,14 @@ function NewBuild({ handleClose }: any) {
                 },
                 body: JSON.stringify(BuildData),
             });
-    
+
             const result = await response.json();
-    
+
             if (response.ok) {
-                alert(result.message); // Show success message
-                console.log(userId);
+                alert(result.message);
+                handleNewBuild(BuildData); // Call handleNewBuild here
             } else {
-                alert(result.message); // Show error message
+                alert(result.message);
             }
         } catch (error) {
             console.error('Error during build creation:', error);
@@ -49,7 +50,7 @@ function NewBuild({ handleClose }: any) {
         <div className="overlay">   
             <div className="popup">
                 <h2>New Build</h2>
-                <p>Welcome to our Builder!<br></br> Please enter the name and what type of build you want.</p>
+                <p>Welcome to our Builder!<br /> Please enter the name and what type of build you want.</p>
                 <form onSubmit={handleSubmit}>
                     <label>
                         Build Name:
@@ -57,7 +58,7 @@ function NewBuild({ handleClose }: any) {
                     </label>
                     <label>
                         Build Type:
-                        <select name="BuildType" id="BuildType" required >
+                        <select name="BuildType" id="BuildType" required>
                             <option value="Work">Work</option>
                             <option value="Gaming">Gaming</option>
                             <option value="Content Creation">Content Creation</option>
@@ -67,7 +68,7 @@ function NewBuild({ handleClose }: any) {
                             <option value="Education">Education</option>
                             <option value="Remote Work">Remote Work</option>
                         </select>
-                    </label><br></br><br></br>
+                    </label><br /><br />
                     <button type="submit">Submit</button>
                 </form>
             </div>

@@ -7,19 +7,69 @@ import Header from './Layout/Header';
 import NewBuild from './NewBuild';
 
 function Builder() {
-  const { isLoggedIn, loading } = useAuth(); // Use the hook with loading and isLoggedIn
+  const { isLoggedIn, loading, userId } = useAuth(); // Use the hook with loading and isLoggedIn
   const navigate = useNavigate();
   const [showLoginMessage, setShowLoginMessage] = useState(false);
   const [showPopUp, setShowPopUp] = useState(false);
+  const [buildName, setBuildName] = useState('');
+  const [hasBuild, setHasBuild] = useState(false);
 
   useEffect(() => {
-    setShowPopUp(true);
     if (!isLoggedIn && !loading) {
       setShowLoginMessage(true);
     } else {
       setShowLoginMessage(false);
     }
-  }, [isLoggedIn, loading, navigate]);
+    if(isLoggedIn){
+      fetchLastBuild();
+    }
+  }, [isLoggedIn, loading]);
+
+  const fetchLastBuild = async () => {
+    try {
+      const response = await fetch(`http://localhost:5500/lastBuild/${userId}`);
+      const result = await response.json();
+      if (response.ok && result) {
+        setBuildName(result.build_name); // Set the build name
+        setHasBuild(true); // Set hasBuild to true
+        setShowPopUp(false); // Close the popup
+      } else {
+        setHasBuild(false); // No build found
+      }
+    } catch (error) {
+      console.error('Error fetching last build:', error);
+    }
+  };
+  const handleNewBuild = async (newBuildData:any) => {
+    try {
+      const response = await fetch('http://localhost:5500/NewBuild', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(newBuildData),
+      });
+      if (response.ok) {
+        fetchLastBuild(); // Fetch the last build again after creating a new build
+      } else {
+        console.error('Error creating new build');
+      }
+    } catch (error) {
+      console.error('Error creating new build:', error);
+    }
+  };
+
+  useEffect(() => {
+    if (!hasBuild) {
+      setShowPopUp(true); // Show the popup if there is no build
+    }
+  }, [hasBuild]);  // This ensures hooks are always called the same way
+
+  useEffect(() => {
+    if (userId) { // Make sure userId is defined
+      fetchLastBuild();
+    }
+  }, [userId]); 
 
   function handleClose() {
     setShowPopUp(false);
@@ -42,8 +92,6 @@ function Builder() {
     );
   }
 
-
-  
   if (loading) {
     // Display a loading spinner while checking authentication
     return (
@@ -53,10 +101,10 @@ function Builder() {
     );
   }
   
-  
 return(
  <> 
     <Header />
+    <span>Build Name :{buildName || 'No Build Selected'}</span>
     <table className="table">
         <thead>
           <tr>
@@ -151,8 +199,10 @@ return(
           </tr>
       </tbody>
     </table>
-    <div><button>Save Build</button><button>New Build</button><button>Change Build</button></div>
-    {showPopUp && <NewBuild handleClose={handleClose} />}
+    <div><button>Save Build</button>
+    <button onClick={() => setShowPopUp(true)}>New Build</button>
+    <button>Change Build</button></div>
+    {showPopUp && <NewBuild handleNewBuild={handleNewBuild} handleClose={handleClose} />}
 </>
 )}
 
