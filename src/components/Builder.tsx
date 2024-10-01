@@ -100,6 +100,7 @@ function Builder() {
       </div>
     );
   }
+
   
 return(
  <> 
@@ -111,7 +112,6 @@ return(
             <th scope="col">Component</th>
             <th scope="col">Part Name</th>
             <th scope="col" colSpan={2}>Description</th>
-            <th scope="col">Wattage</th>
             <th scope="col">Price</th>
             <th scope="col">Purchased</th>
           </tr>
@@ -122,12 +122,10 @@ return(
             <td></td>
             <td></td>
             <td></td>
-            <td></td>
             <td><Link to="/Motherboard"><button className="btn btn-outline-dark">Add Motherboard</button></Link></td>
           </tr>
           <tr>
           <th scope="row"><Link to="/CPU">CPU</Link></th>
-            <td></td>
             <td></td>
             <td></td>
             <td></td>
@@ -138,12 +136,10 @@ return(
             <td></td>
             <td></td>
             <td></td>
-            <td></td>
             <td><Link to="/CPU_Cooler"><button className="btn btn-outline-dark">Add CPU Cooler</button></Link></td>
           </tr>
           <tr>
           <th scope="row"><Link to="/RAM">RAM</Link></th>
-            <td></td>
             <td></td>
             <td></td>
             <td></td>
@@ -154,12 +150,10 @@ return(
             <td></td>
             <td></td>
             <td></td>
-            <td></td>
             <td><Link to="/GPU"><button className="btn btn-outline-dark">Add GPU</button></Link></td>
           </tr>
           <tr>
           <th scope="row"><Link to="/Storage">Storage</Link></th>
-            <td></td>
             <td></td>
             <td></td>
             <td></td>
@@ -170,12 +164,10 @@ return(
             <td></td>
             <td></td>
             <td></td>
-            <td></td>
             <td><Link to="/PSU"><button className="btn btn-outline-dark">Add PSU</button></Link></td>
           </tr>
           <tr>
           <th scope="row"><Link to="/Case">Case</Link></th>
-            <td></td>
             <td></td>
             <td></td>
             <td></td>
@@ -186,12 +178,10 @@ return(
             <td></td>
             <td></td>
             <td></td>
-            <td></td>
             <td><Link to="/OS"><button className="btn btn-outline-dark">Add OS</button></Link></td>
           </tr>
           <tr>
           <th scope="row"><Link to="/NetAdapter"> Network Adapter</Link></th>
-            <td></td>
             <td></td>
             <td></td>
             <td></td>
